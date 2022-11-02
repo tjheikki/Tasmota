@@ -463,6 +463,15 @@ uint32_t parseSingleAttribute(Z_attribute & attr, const SBuffer &buf,
         }
       }
       break;
+    case Zint24:      // int24
+      {
+        int32_t int24_val = ((buf.get8(i + 2) << 24) + (buf.get8(i + 1) << 16) +  (buf.get8(i) << 8)) >> 8;
+        // i += 3;
+        if (-0x800000 != int24_val) {
+          attr.setInt(int24_val);
+        }
+      }
+      break;
     case Zint32:      // int32
       {
         int32_t int32_val = buf.get32(i);
